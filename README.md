@@ -1,2 +1,2 @@
 # PlantManager
-ReactNative app using firebase
+ReactNative app based on the Next Level Week #5 challenge of Rockseat.
