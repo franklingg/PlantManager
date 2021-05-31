@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import styles from './styles';
-import Logo from '~/assets/img/logo.svg';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -16,7 +15,7 @@ export default function Splash() {
   
   return (
     <View style={styles.background}>
-      <Logo />
+      <Text>Confirmed</Text>
     </View>
   );
 }

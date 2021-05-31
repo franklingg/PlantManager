@@ -1,8 +1,8 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import {Splash, Welcome} from '~/screens';
+import { Splash, Welcome, Confirmation } from '~/screens';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +20,13 @@ export default function Routes() {
         <Stack.Screen
           name="Welcome"
           component={Welcome}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="Confirmation"
+          component={Confirmation}
           options={{
             gestureEnabled: false,
           }}
