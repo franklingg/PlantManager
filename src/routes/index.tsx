@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Splash, Welcome, Confirmation } from '~/screens';
+import { Splash, Welcome, FirstAccess, Success } from '~/screens';
 
 const Stack = createStackNavigator();
 
@@ -25,8 +25,15 @@ export default function Routes() {
           }}
         />
         <Stack.Screen
-          name="Confirmation"
-          component={Confirmation}
+          name="FirstAccess"
+          component={FirstAccess}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="Success"
+          component={Success}
           options={{
             gestureEnabled: false,
           }}

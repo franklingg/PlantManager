@@ -4,9 +4,17 @@ import fonts from '~/styles/fonts';
 
 export default StyleSheet.create({
   container: {
-    height: '100%',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 40,
+    gap: 40,
+  },
+  buttonText:{
+    color: colors.white,
+    fontFamily: fonts.family.medium,
+    fontSize: fonts.size.text,
+  },
+  emoji:{
+    height: 96,
+    width: 96,
   }
 });
