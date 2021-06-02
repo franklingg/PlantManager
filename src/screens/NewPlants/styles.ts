@@ -13,8 +13,8 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   loadingView: {
-    
-  }
+    maxWidth: '60%',
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
