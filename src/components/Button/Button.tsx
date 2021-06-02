@@ -9,7 +9,11 @@ type ButtonProps = PropsWithChildren<TouchableOpacityProps> & {
 export default function Button(props: ButtonProps) {
   return (
     <TouchableOpacity
-      style={props.type ? styles.iconButton : styles.textButton}
+      style={[
+        styles.container,
+        props.type ? styles.iconButton : styles.textButton,
+        props.disabled ? styles.disabled : {}
+      ]}
       {...props}>
       {props.children}
     </TouchableOpacity>

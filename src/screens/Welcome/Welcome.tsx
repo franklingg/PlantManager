@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,8 +13,7 @@ export default function Welcome() {
   const navigation = useNavigation();
 
   const nextScreen = useCallback( async () => {
-    const userName = await AsyncStorage.getItem('@user_name');
-    navigation.navigate( userName ? 'Success' : 'FirstAccess');
+    navigation.navigate('FirstAccess');
   }, []);
 
   return (
@@ -25,7 +24,7 @@ export default function Welcome() {
         forma fácil
       </Text>
 
-      <Watering />
+      <Watering height={styles.image.height} />
 
       <Text style={commonStyle.text}>
         Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
@@ -33,7 +32,7 @@ export default function Welcome() {
       </Text>
 
       <Button type="icon" onPress={nextScreen}>
-        <Feather name="chevron-right" size={40} color={'grey'} />
+        <Feather name="chevron-right" size={30} color={'white'} />
       </Button>
     </SafeAreaView>
   );
