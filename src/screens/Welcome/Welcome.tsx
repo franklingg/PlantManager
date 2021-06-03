@@ -5,7 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
-import commonStyle from '~/styles/common';
+import { commonStyle } from '~/styles';
 import Watering from '~/assets/img/watering.svg';
 import Button from '~/components/Button';
 

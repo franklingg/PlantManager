@@ -7,6 +7,7 @@ import {
   Welcome,
   FirstAccess,
   Success,
+  PlantRegister,
 } from '~/screens';
 
 import PlantTab from './plantTab';
@@ -55,6 +56,13 @@ export default function Routes() {
         <Stack.Screen
           name="MyPlants"
           component={PlantTab}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="PlantRegister"
+          component={PlantRegister}
           options={{
             gestureEnabled: false,
           }}

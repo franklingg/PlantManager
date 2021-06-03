@@ -1,21 +1,22 @@
 import React, { PropsWithChildren } from 'react';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styles from './styles';
 
-type ButtonProps = PropsWithChildren<TouchableOpacityProps> & {
+type ButtonProps = PropsWithChildren<RectButtonProperties> & {
   type?: 'icon';
 };
 
 export default function Button(props: ButtonProps) {
   return (
-    <TouchableOpacity
+    <RectButton
+      activeOpacity={0.6}
       style={[
         styles.container,
         props.type ? styles.iconButton : styles.textButton,
-        props.disabled ? styles.disabled : {}
+        !props.enabled && props.enabled !== undefined ? styles.disabled : {},
       ]}
       {...props}>
       {props.children}
-    </TouchableOpacity>
+    </RectButton>
   );
 }

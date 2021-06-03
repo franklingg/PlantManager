@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import commonStyle from '~/styles/common';
+import { commonStyle } from '~/styles';
 import styles from './styles';
 import Button from '~/components/Button';
 

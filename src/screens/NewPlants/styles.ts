@@ -1,34 +1,17 @@
 import { StyleSheet } from 'react-native';
-import colors from '~/styles/colors';
-import fonts from '~/styles/fonts';
+import { colors, fonts } from '~/styles';
 
 export default StyleSheet.create({
-  container: {
-    marginTop: 40,
-    marginHorizontal: 32,
-  },
-  loading: {
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  loadingView: {
-    maxWidth: '60%',
+  container:{
+    backgroundColor: colors.background,
   },
   header: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginHorizontal: 32,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  lightTitle: {
-    fontFamily: fonts.family.regular,
-    fontSize: fonts.size.heading,
-    color: colors.body_dark
-  },
-  darkTitle: {
-    fontFamily: fonts.family.bold,
-    fontSize: fonts.size.heading,
-    color: colors.heading
   },
   image:{
     height: 70,

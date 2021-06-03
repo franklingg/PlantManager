@@ -14,7 +14,7 @@ export default function Routes() {
         activeTintColor: colors.green,
         inactiveTintColor: colors.heading,
         labelPosition: 'beside-icon',
-        style: { height: 88 },
+        style: { height: 78 },
         labelStyle: {
           fontSize: fonts.size.complement,
           fontFamily: fonts.family.regular

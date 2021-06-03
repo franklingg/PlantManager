@@ -12,7 +12,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-import commonStyle from '~/styles/common';
+import { commonStyle } from '~/styles';
 import styles from './styles';
 import Button from '~/components/Button';
 
@@ -61,7 +61,7 @@ export default function FirstAcess() {
               onChangeText={setName}
             />
 
-            <Button disabled={!name || false} onPress={nextScreen}>
+            <Button enabled={Boolean(name)} onPress={nextScreen}>
               <Text style={commonStyle.buttonText}>Confirmar</Text>
             </Button>
           </View>

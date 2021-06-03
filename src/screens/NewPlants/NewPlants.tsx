@@ -1,42 +1,66 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, SafeAreaView, Text, View } from 'react-native';
-import LottieView from 'lottie-react-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import commonStyle from '~/styles/common';
+import {
+  Environment,
+  getEnvironments,
+  getPlants,
+  Plant,
+} from '~/services/database';
+import { commonStyle } from '~/styles';
 import styles from './styles';
+import Loading from '~/components/Loading';
+import PlantsView from '~/components/PlantsView';
 
 export default function NewPlants() {
+  const navigation = useNavigation();
   const [name, setName] = useState('');
+  const [environments, setEnvironments] = useState<Environment[]>([]);
+  const [plants, setPlants] = useState<Plant[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const plantRegister = useCallback(
+    (p: Plant) => {
+      navigation.navigate('PlantRegister', { plant: p });
+    },
+    [navigation],
+  );
 
   useEffect(() => {
     const readStorage = async () => {
-      let userName = await AsyncStorage.getItem('@user_name');
-      return userName ? userName : '';
+      const userName = await AsyncStorage.getItem('@user_name');
+      setName(userName || '');
     };
-    readStorage().then(n => setName(n));
+    const readDatabase = async () => {
+      const loadedEnvs = await getEnvironments();
+      const loadedPlants = await getPlants();
+      setEnvironments(loadedEnvs);
+      setPlants(loadedPlants);
+    };
+    setIsLoading(true);
+    readStorage();
+    readDatabase();
+    setIsLoading(false);
   }, []);
 
   return isLoading ? (
-    <SafeAreaView style={styles.loading}>
-      <LottieView
-        source={require('~/assets/lottie/plant.json')}
-        autoPlay
-        loop
-        speed={1.75}
-        style={styles.loadingView}
-      />
-    </SafeAreaView>
- ) : (
+    <Loading />
+  ) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.lightTitle}>Olá,</Text>
-          <Text style={styles.darkTitle}>{name}</Text>
+          <Text style={commonStyle.heading}>Olá,</Text>
+          <Text style={[commonStyle.heading, commonStyle.bold]}>{name}</Text>
         </View>
         <Image style={styles.image} source={require('~/assets/img/user.png')} />
       </View>
+      <PlantsView
+        environments={environments}
+        plants={plants}
+        plantClick={plantRegister}
+      />
     </SafeAreaView>
   );
 }
