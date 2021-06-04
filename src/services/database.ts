@@ -25,7 +25,14 @@ export interface Plant {
   name: string;
   photo: string;
   water_tips: string;
-}
+};
+
+export interface PlantSaved {
+  id: number;
+  name: string;
+  photo: string;
+  remindTime: string;
+};
 
 export async function getEnvironments() {
   const data = await environments.get().then(query => {

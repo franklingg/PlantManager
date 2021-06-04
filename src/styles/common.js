@@ -20,6 +20,12 @@ export default StyleSheet.create({
     fontFamily: fonts.family.regular,
     textAlign: 'center',
   },
+  complement: {
+    fontSize: fonts.size.complement,
+    color: colors.body_dark,
+    fontFamily: fonts.family.regular,
+    textAlign: 'center',
+  },
   buttonText: {
     color: colors.white,
     fontFamily: fonts.family.medium,
