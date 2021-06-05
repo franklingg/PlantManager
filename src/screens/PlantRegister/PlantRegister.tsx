@@ -17,7 +17,7 @@ import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import Button from '~/components/Button';
 import { Plant, PlantSaved } from '~/services/database';
 import WeekdayPicker from '~/components/WeekdayPicker';
-import { getTime } from '~/utils/TimeFormat';
+import { getDateTime, getDayOfWeek, getTime } from '~/utils/TimeFormat';
 import { colors, commonStyle } from '~/styles';
 import styles from './styles';
 
@@ -29,13 +29,10 @@ export default function PlantRegister() {
   const navigation = useNavigation();
   const { plant } = useRoute().params as ScreenInfo;
   const [confirmTitle, setConfirmTitle] = useState('');
-  const [savedPlants, setSavedPlants] = useState<PlantSaved[]>([]);
 
   //choose time
-  const [isWeekly, setIsWeekly] = useState(
-    plant.frequency.repeat_every === 'week',
-  );
-  const [selectedDay, setSelectedDay] = useState('');
+  const [isWeekly] = useState(plant.frequency.repeat_every === 'week');
+  const [selectedDay, setSelectedDay] = useState(getDayOfWeek(new Date()));
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
 
@@ -47,43 +44,46 @@ export default function PlantRegister() {
   }, []);
 
   const nextScreen = useCallback(() => {
-    const savePlant = async () => {
-      const plantToSave: PlantSaved = {
-        id: plant.id,
-        name: plant.name,
-        photo: plant.photo,
-        remindTime: selectedTime,
-        remindDay: selectedDay,
-      };
-      savedPlants.some(saved => saved.id === plant.id)
-        ? setSavedPlants(
-            savedPlants.map(saved =>
-              saved.id === plant.id ? plantToSave : saved,
-            ),
-          )
-        : setSavedPlants([...savedPlants, plantToSave]);
+    const plantToSave: PlantSaved = {
+      id: plant.id,
+      name: plant.name,
+      photo: plant.photo,
+      remindTime: getTime(selectedTime),
+      remindDay: selectedDay,
     };
-
-    navigation.navigate('NewPlants');
-  }, []);
-
-  useEffect(() => {
-    const readPlants = async () => {
-      const userPlantsStr = await AsyncStorage.getItem('@user_plants');
+    AsyncStorage.getItem('@user_plants').then(userPlantsStr => {
       const userPlants: PlantSaved[] = userPlantsStr
         ? JSON.parse(userPlantsStr)
         : [];
-      setSavedPlants(userPlants);
-      userPlants.forEach(saved => {
-        if (saved.id === plant.id) {
-          setConfirmTitle('Confirmar alterações');
-          setSelectedDay(saved.remindDay);
-          setSelectedTime(saved.remindTime);
-        }
-      });
-      setConfirmTitle(confirmTitle || 'Cadastrar planta');
-    };
-    readPlants();
+      if (userPlants.some(saved => saved.id === plant.id)) {
+        userPlants.forEach((saved, idx, arr) => {
+          arr[idx] = saved.id === plant.id ? plantToSave : saved;
+        });
+      } else {
+        userPlants.push(plantToSave);
+      }
+      AsyncStorage.setItem('@user_plants', JSON.stringify(userPlants)).then(
+        () => {
+          navigation.navigate('NewPlants');
+        },
+      );
+    });
+  }, [selectedDay, selectedTime]);
+
+  useEffect(() => {
+    AsyncStorage.getItem('@user_plants').then(userPlantsStr => {
+      const userPlants: PlantSaved[] = userPlantsStr
+        ? JSON.parse(userPlantsStr)
+        : [];
+      const matchedPlant = userPlants.find(saved => saved.id === plant.id);
+      if (matchedPlant) {
+        setConfirmTitle('Confirmar alterações');
+        setSelectedDay(matchedPlant.remindDay);
+        setSelectedTime(getDateTime(matchedPlant.remindTime));
+      } else {
+        setConfirmTitle('Cadastrar planta');
+      }
+    });
   }, []);
 
   return (
@@ -114,7 +114,10 @@ export default function PlantRegister() {
           </Text>
           <View style={styles.timePicker}>
             {isWeekly && (
-              <WeekdayPicker day={selectedDay} setDay={setSelectedDay} />
+              <WeekdayPicker
+                initialDay={selectedDay}
+                onChange={option => setSelectedDay(option.label)}
+              />
             )}
             {Platform.OS === 'android' && (
               <TouchableOpacity

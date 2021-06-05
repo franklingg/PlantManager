@@ -31,7 +31,7 @@ export interface PlantSaved {
   id: number;
   name: string;
   photo: string;
-  remindTime: Date;
+  remindTime: string;
   remindDay: string;
 };
 

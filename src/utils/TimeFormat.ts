@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const WeekDays = [
   {
@@ -37,5 +37,9 @@ export function getDayOfWeek(datetime: Date) {
 }
 
 export function getTime(datetime: Date){
-  return format(datetime, 'k:m');
+  return format(datetime, 'kk:mm');
 };
+
+export function getDateTime(time: string){
+  return parseISO(`2019-11-27 ${time}:00`);
+}

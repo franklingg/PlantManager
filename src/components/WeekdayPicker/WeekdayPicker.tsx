@@ -5,26 +5,26 @@ import styles from './styles';
 import { commonStyle } from '~/styles';
 
 type Props = {
-  day: string;
-  setDay: Dispatch<SetStateAction<string>>;
+  initialDay: string;
+  onChange: (option: { key: string; label: string }) => void;
 };
 
-export default function WeekdayPicker({ day, setDay }: Props) {
-  useEffect(() => {
-    setDay(old => old || getDayOfWeek(new Date()));
-  }, []);
-
+export default function WeekdayPicker({ initialDay, onChange }: Props) {
   return (
     <ModalSelector
       data={WeekDays}
+      animationType={'fade'}
       cancelText={'Cancelar'}
-      initValue={day}
-      onChange={option => {
-        setDay(option.label);
-      }}
+      initValue={initialDay}
+      onChange={onChange}
+      touchableActiveOpacity={0.7}
       childrenContainerStyle={styles.root}
       initValueTextStyle={commonStyle.complement}
-      touchableActiveOpacity={0.7}
+      selectStyle={{ borderWidth: 0 }}
+      optionStyle={styles.option}
+      optionTextStyle={styles.optionText}
+      cancelStyle={styles.cancel}
+      cancelTextStyle={styles.cancelText}
     />
   );
 }
