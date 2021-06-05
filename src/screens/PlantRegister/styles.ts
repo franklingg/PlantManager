@@ -8,6 +8,15 @@ export default StyleSheet.create({
     paddingHorizontal: 32,
     backgroundColor: colors.background,
   },
+  returnButton:{
+    position: 'absolute',
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 16,
+    top: 34,
+  },
   plantInfo:{
     maxHeight: 310,
     justifyContent: 'space-between',
@@ -24,7 +33,7 @@ export default StyleSheet.create({
   waterTips:{
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 32,
+    marginVertical: 28,
     padding: 16,
     backgroundColor: colors.blue_light,
     borderRadius: 20,
@@ -39,6 +48,22 @@ export default StyleSheet.create({
     fontFamily: fonts.family.regular,
   },
   timePicker:{
+    flexDirection: 'row',
+    marginTop: 16,
     marginBottom: 40,
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  timeButton:{
+    backgroundColor: colors.shape,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    minWidth: '40%',
+  },
+  timeButtonAlone:{
+    paddingVertical: 12,
+    minWidth: '50%'
   }
 });

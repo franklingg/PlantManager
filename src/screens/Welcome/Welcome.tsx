@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { SafeAreaView, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 import { commonStyle } from '~/styles';

@@ -9,13 +9,17 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { Plant, PlantSaved } from '~/services/database';
-import { commonStyle } from '~/styles';
-import styles from './styles';
+import Feather from 'react-native-vector-icons/Feather';
 import { SvgUri } from 'react-native-svg';
-import Button from '~/components/Button';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+
+import Button from '~/components/Button';
+import { Plant, PlantSaved } from '~/services/database';
+import WeekdayPicker from '~/components/WeekdayPicker';
+import { getTime } from '~/utils/TimeFormat';
+import { colors, commonStyle } from '~/styles';
+import styles from './styles';
 
 type ScreenInfo = {
   plant: Plant;
@@ -31,6 +35,7 @@ export default function PlantRegister() {
   const [isWeekly, setIsWeekly] = useState(
     plant.frequency.repeat_every === 'week',
   );
+  const [selectedDay, setSelectedDay] = useState('');
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
 
@@ -38,8 +43,8 @@ export default function PlantRegister() {
     if (Platform.OS === 'android') {
       setShowPicker(old => !old);
     }
-    setSelectedTime(dateTime);
-  });
+    setSelectedTime(old => dateTime || old);
+  }, []);
 
   const nextScreen = useCallback(() => {
     const savePlant = async () => {
@@ -47,7 +52,8 @@ export default function PlantRegister() {
         id: plant.id,
         name: plant.name,
         photo: plant.photo,
-        remindTime: '',
+        remindTime: selectedTime,
+        remindDay: selectedDay,
       };
       savedPlants.some(saved => saved.id === plant.id)
         ? setSavedPlants(
@@ -68,15 +74,27 @@ export default function PlantRegister() {
         ? JSON.parse(userPlantsStr)
         : [];
       setSavedPlants(userPlants);
-      userPlants.some(saved => saved.id === plant.id)
-        ? setConfirmTitle('Confirmar alterações')
-        : setConfirmTitle('Cadastrar planta');
+      userPlants.forEach(saved => {
+        if (saved.id === plant.id) {
+          setConfirmTitle('Confirmar alterações');
+          setSelectedDay(saved.remindDay);
+          setSelectedTime(saved.remindTime);
+        }
+      });
+      setConfirmTitle(confirmTitle || 'Cadastrar planta');
     };
     readPlants();
   }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <RectButton
+        style={styles.returnButton}
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Feather name="chevron-left" size={24} color={colors.heading} />
+      </RectButton>
       <SafeAreaView>
         <View style={styles.plantInfo}>
           <SvgUri style={styles.plantImage} uri={plant.photo} />
@@ -90,20 +108,39 @@ export default function PlantRegister() {
           />
           <Text style={styles.waterText}>{plant.water_tips}</Text>
         </View>
-        <View style={styles.timePicker}>
+        <View>
           <Text style={commonStyle.complement}>
             Escolha o melhor {isWeekly && 'dia e '}horário para ser lembrado:
           </Text>
-          {isWeekly && }
-          {showPicker && (
-            <RNDateTimePicker
-              value={selectedTime}
-              mode="time"
-              display="spinner"
-              onChange={handleChangeTime}
-              is24Hour
-            />
-          )}
+          <View style={styles.timePicker}>
+            {isWeekly && (
+              <WeekdayPicker day={selectedDay} setDay={setSelectedDay} />
+            )}
+            {Platform.OS === 'android' && (
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  setShowPicker(!showPicker);
+                }}
+                style={[
+                  styles.timeButton,
+                  isWeekly ? {} : styles.timeButtonAlone,
+                ]}>
+                <Text style={commonStyle.complement}>
+                  {getTime(selectedTime)}
+                </Text>
+              </TouchableOpacity>
+            )}
+            {showPicker && (
+              <RNDateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="spinner"
+                onChange={handleChangeTime}
+                is24Hour
+              />
+            )}
+          </View>
         </View>
         <Button onPress={nextScreen}>
           <Text style={commonStyle.buttonText}>{confirmTitle}</Text>

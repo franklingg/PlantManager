@@ -31,7 +31,8 @@ export interface PlantSaved {
   id: number;
   name: string;
   photo: string;
-  remindTime: string;
+  remindTime: Date;
+  remindDay: string;
 };
 
 export async function getEnvironments() {
