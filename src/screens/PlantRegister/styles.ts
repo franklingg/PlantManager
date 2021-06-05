@@ -1,20 +1,25 @@
 import { StyleSheet } from 'react-native';
-import { colors, fonts } from '~/styles';
+import { colors, fonts, commonStyle } from '~/styles';
 
 export default StyleSheet.create({
   container:{
-    paddingTop: 16,
+    paddingTop: 8,
     paddingBottom: 32,
     paddingHorizontal: 32,
     backgroundColor: colors.background,
   },
   plantInfo:{
-    maxHeight: '53%',
+    maxHeight: 310,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   plantImage:{
-    maxHeight: 180,
+    maxHeight: 176,
+  },
+  plantName:{
+    ...commonStyle.heading,
+    ...commonStyle.bold,
+    marginBottom: 8,
   },
   waterTips:{
     flexDirection: 'row',

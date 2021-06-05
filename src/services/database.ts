@@ -18,7 +18,7 @@ export interface Plant {
   about: string;
   environments: string[];
   frequency: {
-    repeat_every: string;
+    repeat_every: 'week' | 'day';
     times: number;
   };
   id: number;

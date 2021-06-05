@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -8,6 +15,7 @@ import { commonStyle } from '~/styles';
 import styles from './styles';
 import { SvgUri } from 'react-native-svg';
 import Button from '~/components/Button';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 type ScreenInfo = {
   plant: Plant;
@@ -18,6 +26,20 @@ export default function PlantRegister() {
   const { plant } = useRoute().params as ScreenInfo;
   const [confirmTitle, setConfirmTitle] = useState('');
   const [savedPlants, setSavedPlants] = useState<PlantSaved[]>([]);
+
+  //choose time
+  const [isWeekly, setIsWeekly] = useState(
+    plant.frequency.repeat_every === 'week',
+  );
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
+
+  const handleChangeTime = useCallback((event: Event, dateTime?: Date) => {
+    if (Platform.OS === 'android') {
+      setShowPicker(old => !old);
+    }
+    setSelectedTime(dateTime);
+  });
 
   const nextScreen = useCallback(() => {
     const savePlant = async () => {
@@ -37,7 +59,7 @@ export default function PlantRegister() {
     };
 
     navigation.navigate('NewPlants');
-  }, [navigation]);
+  }, []);
 
   useEffect(() => {
     const readPlants = async () => {
@@ -58,9 +80,7 @@ export default function PlantRegister() {
       <SafeAreaView>
         <View style={styles.plantInfo}>
           <SvgUri style={styles.plantImage} uri={plant.photo} />
-          <Text style={[commonStyle.heading, commonStyle.bold]}>
-            {plant.name}
-          </Text>
+          <Text style={styles.plantName}>{plant.name}</Text>
           <Text style={commonStyle.text}>{plant.about}</Text>
         </View>
         <View style={styles.waterTips}>
@@ -72,8 +92,18 @@ export default function PlantRegister() {
         </View>
         <View style={styles.timePicker}>
           <Text style={commonStyle.complement}>
-            Escolha o melhor horário para ser lembrado:
+            Escolha o melhor {isWeekly && 'dia e '}horário para ser lembrado:
           </Text>
+          {isWeekly && }
+          {showPicker && (
+            <RNDateTimePicker
+              value={selectedTime}
+              mode="time"
+              display="spinner"
+              onChange={handleChangeTime}
+              is24Hour
+            />
+          )}
         </View>
         <Button onPress={nextScreen}>
           <Text style={commonStyle.buttonText}>{confirmTitle}</Text>
