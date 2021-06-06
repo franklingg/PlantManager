@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { colors, fonts } from '~/styles';
 
 export default StyleSheet.create({
-  container:{
+  container: {
     height: 80,
     paddingHorizontal: 16,
     marginVertical: 6,
@@ -11,13 +11,24 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20,
   },
-  plantPhoto:{
+  plantPhoto: {
     maxWidth: 50,
     marginRight: 10,
   },
-  waterText:{
+  waterText: {
     textAlign: 'right',
     fontFamily: fonts.family.medium,
     fontSize: fonts.size.complement,
-  }
+  },
+  trashButton: {
+    marginLeft: -30,
+    backgroundColor: colors.red,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    marginVertical: 6,
+    paddingRight: 24,
+    width: 100,
+    height: 80,
+    borderRadius: 20,
+  },
 });
