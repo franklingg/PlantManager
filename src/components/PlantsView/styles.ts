@@ -11,6 +11,5 @@ export default StyleSheet.create({
     width: '100%',
     marginHorizontal: 24,
     marginTop: 20,
-    marginBottom: 500,
   }
 });

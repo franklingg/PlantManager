@@ -64,13 +64,23 @@ export default function PlantRegister() {
       }
       AsyncStorage.setItem('@user_plants', JSON.stringify(userPlants)).then(
         () => {
-          navigation.navigate('NewPlants');
+          const successInfo = {
+            title: 'Tudo certo',
+            subtitle:
+              'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
+            buttonText: 'Muito obrigado :D',
+          };
+          navigation.navigate(
+            confirmTitle === 'Cadastrar planta' ? 'Success' : 'NewPlants',
+            successInfo,
+          );
         },
       );
     });
-  }, [selectedDay, selectedTime]);
+  }, [confirmTitle, selectedDay, selectedTime]);
 
   useEffect(() => {
+    // AsyncStorage.removeItem('@user_plants').then();
     AsyncStorage.getItem('@user_plants').then(userPlantsStr => {
       const userPlants: PlantSaved[] = userPlantsStr
         ? JSON.parse(userPlantsStr)

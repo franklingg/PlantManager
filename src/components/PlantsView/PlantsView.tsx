@@ -69,6 +69,7 @@ export default function PlantsView(props: PlantsViewProps) {
             />
           )}
           numColumns={2}
+          ListFooterComponent={<View style={{ paddingBottom: 490 }} />}
         />
       </View>
     </>

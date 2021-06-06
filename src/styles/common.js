@@ -33,5 +33,8 @@ export default StyleSheet.create({
   },
   bold:{
     fontFamily: fonts.family.bold,
+  },
+  light:{
+    color: colors.body_light,
   }
 });

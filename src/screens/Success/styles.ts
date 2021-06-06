@@ -7,6 +7,7 @@ export default StyleSheet.create({
     height: '100%',
     paddingTop: '15%',
     paddingBottom: '45%',
+    paddingHorizontal: 32,
     justifyContent: 'space-around',
     alignItems: 'center'
   },

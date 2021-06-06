@@ -14,7 +14,7 @@ interface Info {
 
 export default function Success() {
   const navigation = useNavigation();
-  const { title, subtitle, buttonText } = useRoute().params as Info;
+  const { emoji, title, subtitle, buttonText } = useRoute().params as Info;
 
   const nextScreen = useCallback(() => {
     navigation.navigate('NewPlants');
@@ -22,7 +22,7 @@ export default function Success() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.emoji}> 😄 </Text>
+      <Text style={styles.emoji}>{'😄'}</Text>
       <View>
         <Text style={commonStyle.title}>
           {title}
