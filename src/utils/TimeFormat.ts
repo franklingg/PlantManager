@@ -1,5 +1,7 @@
 import { format, parseISO } from 'date-fns';
 
+const ONE_DAY = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+
 export const WeekDays = [
   {
     key: 1,
@@ -36,10 +38,29 @@ export function getDayOfWeek(datetime: Date) {
   return WeekDays.find(value => value.key === weekDay)!.label;
 }
 
-export function getTime(datetime: Date){
-  return format(datetime, 'kk:mm');
-};
+export function getNumberOfDay(day: string) {
+  const daySearched = WeekDays.find(d => d.label === day);
 
-export function getDateTime(time: string){
+  return daySearched!.key;
+}
+
+export function getTime(datetime: Date) {
+  return format(datetime, 'kk:mm');
+}
+
+export function getDateTime(time: string) {
   return parseISO(`2019-11-27 ${time}:00`);
+}
+
+export function addTime(datetime: Date, time: string) {
+  const [hrs, mns] = time.split(':').map(v => parseInt(v));
+  datetime.setHours(hrs, mns, 0, 0);
+}
+
+export function addDays(datetime: Date, day: string) {
+  const nextDay = getNumberOfDay(day) % 7;
+  const distanceFromNow = nextDay - datetime.getDay();
+  const daysFromNow =
+    distanceFromNow > 0 ? distanceFromNow : distanceFromNow + 7;
+  datetime.setTime(datetime.getTime() + daysFromNow * ONE_DAY);
 }

@@ -5,8 +5,8 @@ import styles from './styles';
 import { commonStyle } from '~/styles';
 
 type Props = {
-  initialDay: string;
-  onChange: (option: { key: string; label: string }) => void;
+  initialDay?: string;
+  onChange: (option: { key: number; label: string }) => void;
 };
 
 export default function WeekdayPicker({ initialDay, onChange }: Props) {
@@ -15,7 +15,7 @@ export default function WeekdayPicker({ initialDay, onChange }: Props) {
       data={WeekDays}
       animationType={'fade'}
       cancelText={'Cancelar'}
-      initValue={initialDay}
+      initValue={initialDay || getDayOfWeek(new Date())}
       onChange={onChange}
       touchableActiveOpacity={0.7}
       childrenContainerStyle={styles.root}

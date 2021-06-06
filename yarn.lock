@@ -1125,11 +1125,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.0.0.tgz#bf8794b72c45a8eea09cf27b7499a8d87fb3a815"
   integrity sha512-Js+oz1hZG0DMPYV3wLIcAWTN0vmjv4ZRlFWoUXPyVFfF7QQapnb9T6iYZ7KPnAY0lITTX1yvtkxGSnY02vkq0Q==
 
-"@react-native-firebase/messaging@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-12.0.0.tgz#6146b9572a289ffc7f89abd9c2b58d013ed36a22"
-  integrity sha512-rxanSjTfub75g5KgEtnmW7pFHNy5M0iEw+xCtlb/NLCQ4C9asCH3TGCAUqel9NbgsFzUv67WxrVOFRKHHrb4TA==
-
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -1427,6 +1422,11 @@
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
+
+"@types/react-native-push-notification@^7.3.0":
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-7.3.0.tgz#5c998134347c1e8a2ddb28524349acf12cfbb243"
+  integrity sha512-11p6U/6atLJQcuBiwO+QR5NzAWyxowj9yiQ5hcRwfH9lwD06jKyG2nr/b4MUT7HALMF3JUZUn/qZ1gR6DgfnFQ==
 
 "@types/react-native-vector-icons@^6.4.6":
   version "6.4.6"
@@ -5826,6 +5826,11 @@ react-native-modalbox@^2.0.2:
   integrity sha512-uSuoZ+siPPNqWGyw8NXhA/Aots7mOx2+qijFoeovequY0kczZEPZDd0ARHbzg+1cE3H3AATJEwGdkVA8lUxs0g==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-push-notification@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.3.1.tgz#1495feacd25169b998446dcf7b448a197ae5dca0"
+  integrity sha512-5kSKPvDU23uZRmzgKTsGhbwGNvB2tidu1VnInBHP53ZD0VEPSBl5fbpuTfHH98ED+Gp1SCcT2/e6bJWkIspKvg==
 
 react-native-reanimated@^2.2.0:
   version "2.2.0"

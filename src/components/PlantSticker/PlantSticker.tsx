@@ -39,6 +39,7 @@ export default function PlantSticker({ plant, ...rest }: CardProps) {
       userPlants.splice(searchedIdx, 1);
       AsyncStorage.setItem('@user_plants', JSON.stringify(userPlants)).then(
         () => {
+          
           modalRef.current?.close();
         },
       );

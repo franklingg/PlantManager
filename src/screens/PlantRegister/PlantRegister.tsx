@@ -20,6 +20,8 @@ import WeekdayPicker from '~/components/WeekdayPicker';
 import { getDateTime, getDayOfWeek, getTime } from '~/utils/TimeFormat';
 import { colors, commonStyle } from '~/styles';
 import styles from './styles';
+import { createPlantNotification } from '~/utils/NotificationWorker';
+import PushNotification from 'react-native-push-notification';
 
 type ScreenInfo = {
   plant: Plant;
@@ -32,7 +34,7 @@ export default function PlantRegister() {
 
   //choose time
   const [isWeekly] = useState(plant.frequency.repeat_every === 'week');
-  const [selectedDay, setSelectedDay] = useState(getDayOfWeek(new Date()));
+  const [selectedDay, setSelectedDay] = useState();
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
 
@@ -64,6 +66,11 @@ export default function PlantRegister() {
       }
       AsyncStorage.setItem('@user_plants', JSON.stringify(userPlants)).then(
         () => {
+          createPlantNotification(
+            plant,
+            plantToSave.remindTime,
+            plantToSave.remindDay,
+          );
           const successInfo = {
             title: 'Tudo certo',
             subtitle:
