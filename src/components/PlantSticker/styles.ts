@@ -31,4 +31,36 @@ export default StyleSheet.create({
     height: 80,
     borderRadius: 20,
   },
+  modal:{
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 322,
+    width: 265,
+    padding: 32,
+    borderRadius: 20,
+  },
+  modalPhoto:{
+    maxHeight: 120,
+    maxWidth: 120,
+    backgroundColor: colors.shape,
+    borderRadius: 20,
+  },
+  modalButtons:{
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalBtn:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 90,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: colors.shape,
+  },
+  modalBtnText:{
+    fontFamily: fonts.family.regular,
+    fontSize: fonts.size.span,
+    color: colors.heading,
+  }
 });
