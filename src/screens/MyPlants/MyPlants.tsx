@@ -7,12 +7,16 @@ import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlantSaved } from '~/services/database';
 import Loading from '~/components/Loading';
-import PlantSticker from '~/components/PlantSticker';
+import PlantButton from '~/components/PlantButton';
+import { findClosestNotification } from '~/utils/NotificationWorker';
+import { countDays, countHours } from '~/utils/TimeFormat';
 
 export default function MyPlants() {
-  const [savedPlants, setSavedPlants] = useState<PlantSaved[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  const [savedPlants, setSavedPlants] = useState<PlantSaved[]>([]);
+  const [nextPlantId, setNextPlantId] = useState<number>();
+  const [nextTime, setNextTime] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     AsyncStorage.getItem('@user_plants').then(userPlantsStr => {
@@ -20,9 +24,10 @@ export default function MyPlants() {
         ? JSON.parse(userPlantsStr)
         : [];
       setSavedPlants(userPlants);
+      findClosestNotification(setNextPlantId, setNextTime);
       setIsLoading(false);
     });
-  }, [savedPlants]);
+  }, [savedPlants, nextTime]);
 
   return isLoading ? (
     <Loading />
@@ -43,8 +48,17 @@ export default function MyPlants() {
           source={require('~/assets/icons/waterdrop.png')}
         />
         <Text style={styles.waterText}>
-          Rege sua PLANT {'\n'}
-          daqui a DUAS horas.
+          {nextPlantId ? (
+            <>
+              Regue sua {savedPlants.find(p => p.id === nextPlantId)?.name}{' '}
+              {'\n'}
+              daqui a{' '}
+              {countDays(nextTime) ? `${countDays(nextTime)} dias e ` : ''}
+              {countHours(nextTime)} horas.
+            </>
+          ) : (
+            <>Sem plantinhas para regar ainda!</>
+          )}
         </Text>
       </View>
       <View>
@@ -53,7 +67,7 @@ export default function MyPlants() {
         </Text>
         {savedPlants.length === 0 ? (
           <Text style={styles.noPlants}>
-            Você não cadastrou nenhuma plantinha 😢 {'\n'} 
+            Você não cadastrou nenhuma plantinha 😢 {'\n'}
             Mas logo que o fizer ela estará aqui! 😄
           </Text>
         ) : (
@@ -62,7 +76,15 @@ export default function MyPlants() {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={savedPlants}
-          renderItem={({ item }) => <PlantSticker plant={item} />}
+          renderItem={({ item }) => (
+            <PlantButton
+              role="sticker"
+              plant={item}
+              onPress={() => {
+                navigation.navigate('PlantRegister', { plant: item });
+              }}
+            />
+          )}
           keyExtractor={item => String(item.id)}
           style={styles.plantsList}
           ListFooterComponent={<View style={{ paddingBottom: 510 }} />}

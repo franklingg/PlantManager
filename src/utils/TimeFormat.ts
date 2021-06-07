@@ -1,6 +1,8 @@
 import { format, parseISO } from 'date-fns';
 
-const ONE_DAY = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+export const ONE_HOUR = 60 * 60 * 1000; // minutes * seconds * milliseconds
+export const ONE_DAY = 24 * ONE_HOUR; // hours
+export const ONE_WEEK = ONE_DAY * 7; // days
 
 export const WeekDays = [
   {
@@ -45,7 +47,7 @@ export function getNumberOfDay(day: string) {
 }
 
 export function getTime(datetime: Date) {
-  return format(datetime, 'kk:mm');
+  return format(datetime, 'HH:mm');
 }
 
 export function getDateTime(time: string) {
@@ -55,6 +57,9 @@ export function getDateTime(time: string) {
 export function addTime(datetime: Date, time: string) {
   const [hrs, mns] = time.split(':').map(v => parseInt(v));
   datetime.setHours(hrs, mns, 0, 0);
+  if (datetime.getTime() < Date.now()) {
+    datetime.setTime(datetime.getTime() + ONE_DAY);
+  }
 }
 
 export function addDays(datetime: Date, day: string) {
@@ -64,3 +69,11 @@ export function addDays(datetime: Date, day: string) {
     distanceFromNow > 0 ? distanceFromNow : distanceFromNow + 7;
   datetime.setTime(datetime.getTime() + daysFromNow * ONE_DAY);
 }
+
+export const countDays = (time: number) => {
+  return Math.floor(time / ONE_DAY);
+};
+
+export const countHours = (time: number) => {
+  return Math.floor((time % ONE_DAY) / ONE_HOUR);
+};

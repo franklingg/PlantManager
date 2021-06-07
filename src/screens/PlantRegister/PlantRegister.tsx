@@ -17,11 +17,10 @@ import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import Button from '~/components/Button';
 import { Plant, PlantSaved } from '~/services/database';
 import WeekdayPicker from '~/components/WeekdayPicker';
-import { getDateTime, getDayOfWeek, getTime } from '~/utils/TimeFormat';
+import { getDateTime, getTime } from '~/utils/TimeFormat';
 import { colors, commonStyle } from '~/styles';
 import styles from './styles';
 import { createPlantNotification } from '~/utils/NotificationWorker';
-import PushNotification from 'react-native-push-notification';
 
 type ScreenInfo = {
   plant: Plant;
@@ -34,7 +33,7 @@ export default function PlantRegister() {
 
   //choose time
   const [isWeekly] = useState(plant.frequency.repeat_every === 'week');
-  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDay, setSelectedDay] = useState('');
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(Platform.OS === 'ios');
 
@@ -47,9 +46,7 @@ export default function PlantRegister() {
 
   const nextScreen = useCallback(() => {
     const plantToSave: PlantSaved = {
-      id: plant.id,
-      name: plant.name,
-      photo: plant.photo,
+      ...plant,
       remindTime: getTime(selectedTime),
       remindDay: selectedDay,
     };
@@ -84,7 +81,7 @@ export default function PlantRegister() {
         },
       );
     });
-  }, [confirmTitle, selectedDay, selectedTime]);
+  }, [confirmTitle, navigation, plant, selectedDay, selectedTime]);
 
   useEffect(() => {
     // AsyncStorage.removeItem('@user_plants').then();

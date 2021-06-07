@@ -27,10 +27,7 @@ export interface Plant {
   water_tips: string;
 };
 
-export interface PlantSaved {
-  id: number;
-  name: string;
-  photo: string;
+export interface PlantSaved extends Plant {
   remindTime: string;
   remindDay: string;
 };

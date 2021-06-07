@@ -62,5 +62,25 @@ export default StyleSheet.create({
     fontFamily: fonts.family.regular,
     fontSize: fonts.size.span,
     color: colors.heading,
+  },
+  cardContainer:{
+    backgroundColor: colors.shape,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 8,
+    marginVertical: 12,
+    padding: 5,
+    maxWidth: 148,
+    maxHeight: 160,
+  },
+  cardPlantPhoto:{
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+  cardPlantName:{
+    fontSize: fonts.size.span,
+    fontFamily: fonts.family.bold,
+    color: colors.heading,
   }
 });

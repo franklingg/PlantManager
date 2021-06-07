@@ -5,7 +5,7 @@ import { ALL_ENVIRONMENT, Environment, Plant } from '~/services/database';
 import { commonStyle } from '~/styles';
 import StateButton from '~/components/StateButton';
 import styles from './styles';
-import PlantCard from '../PlantCard';
+import PlantButton from '../PlantButton';
 
 interface PlantsViewProps extends ViewProps {
   environments: Environment[];
@@ -61,7 +61,8 @@ export default function PlantsView(props: PlantsViewProps) {
           showsVerticalScrollIndicator={false}
           data={selectedPlants}
           renderItem={({ item }) => (
-            <PlantCard
+            <PlantButton
+              role="card"
               plant={item}
               onPress={() => {
                 props.plantClick(item);
