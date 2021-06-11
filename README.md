@@ -10,3 +10,4 @@ The app layout/design can be [accessed here](https://www.figma.com/file/k0Ytye7h
 
 ![image](https://user-images.githubusercontent.com/61962950/121092172-8a6dcf80-c7c1-11eb-8b5d-bc0d73732749.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![image](https://user-images.githubusercontent.com/61962950/121092234-98bbeb80-c7c1-11eb-938a-54a84fb88b34.png)
 
+### Resources
