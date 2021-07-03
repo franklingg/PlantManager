@@ -12,5 +12,5 @@ The app layout/design can be [accessed here](https://www.figma.com/file/k0Ytye7h
 
 ### Featured Tools
 
-* Firebase Firestore
+* Firebase Firestore (for storing plant data)
 * React Native Push Notifications
