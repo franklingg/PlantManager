@@ -1,6 +1,6 @@
 # PlantManager
 
-The app is a mobile version of a Home Plant Manager. You can choose a plant and pick a time/day and the app will remember (through Push Notifications) you to water your plant the next time it needs water, according to its needs.
+The app is a mobile version of a Home Plant Manager. You can choose a plant and pick a time/day and the app will remind you (through Push Notifications) to water your plant the next time it needs water, according to its needs.
 
 It works on:
 * Android
